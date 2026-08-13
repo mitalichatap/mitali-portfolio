@@ -443,7 +443,7 @@ function Hero({ onNavigate }) {
   ];
 
   return (
-    <section id="home" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", overflow: "hidden", paddingTop: 88 }}>
+    <section id="home" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", overflow: "visible", paddingTop: 88 }}>
       <div className="circuit-grid" aria-hidden="true" />
       <div className="scan-line" aria-hidden="true" />
 
