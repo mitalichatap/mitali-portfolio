@@ -447,7 +447,7 @@ function Hero({ onNavigate }) {
       <div className="circuit-grid" aria-hidden="true" />
       <div className="scan-line" aria-hidden="true" />
 
-      <div style={{ maxWidth: 1180, margin: "0 auto", padding: "0 24px", position: "relative", zIndex: 2, display: "grid", gridTemplateColumns: "1.15fr 0.85fr", gap: 48, alignItems: "center", width: "100%" }}>
+      <div className="hero-grid" style={{ maxWidth: 1180, margin: "0 auto", padding: "0 24px", position: "relative", zIndex: 2, display: "grid", gap: 48, alignItems: "center", width: "100%" }}>
         <div className="hero-copy">
           <Eyebrow>Computer Engineering · Nagpur, India</Eyebrow>
           <h1 className="display" style={{ fontSize: "clamp(2.3rem, 5vw, 3.6rem)", lineHeight: 1.08, color: T.text, margin: 0, letterSpacing: "-0.01em" }}>
@@ -533,7 +533,7 @@ function Hero({ onNavigate }) {
 function About() {
   return (
     <section id="about" style={{ padding: "120px 24px 100px", position: "relative" }}>
-      <div style={{ maxWidth: 1180, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1.15fr", gap: 56 }}>
+      <div className="about-grid" style={{ maxWidth: 1180, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1.15fr", gap: 56 }}>
         <Reveal>
           <Eyebrow>About Me</Eyebrow>
           <h2 className="display" style={{ fontSize: "clamp(1.7rem, 3vw, 2.3rem)", color: T.text, margin: "0 0 20px" }}>
@@ -691,12 +691,10 @@ function ProjectCard({ project, index }) {
   return (
     <Reveal delay={80}>
       <article className="project-card">
-        <div className="project-grid" style={{ direction: reversed ? "rtl" : "ltr" }}>
-          <div style={{ direction: "ltr" }}>
-            <ProjectMediaGallery media={project.media} folder={project.folder} />
-          </div>
+        <div className={`project-grid ${reversed ? "project-grid-reversed" : ""}`}>
+          <div className="project-media-col"><ProjectMediaGallery media={project.media} folder={project.folder} /></div>
 
-          <div style={{ direction: "ltr" }}>
+          <div className="project-info-col">
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
               <div className="project-icon"><Icon size={16} color={T.cyan} strokeWidth={1.7} /></div>
               <span className="mono" style={{ fontSize: 11.5, color: T.mutedDim, letterSpacing: "0.08em" }}>{project.tag}</span>
@@ -874,7 +872,7 @@ function Contact() {
 
   return (
     <section id="contact" style={{ padding: "110px 24px 130px" }}>
-      <div style={{ maxWidth: 1180, margin: "0 auto", display: "grid", gridTemplateColumns: "0.9fr 1.1fr", gap: 56 }}>
+      <div className="contact-grid" style={{ maxWidth: 1180, margin: "0 auto", display: "grid", gridTemplateColumns: "0.9fr 1.1fr", gap: 56 }}>
         <Reveal>
           <Eyebrow>Contact</Eyebrow>
           <h2 className="display" style={{ fontSize: "clamp(1.7rem, 3vw, 2.3rem)", color: T.text, margin: "0 0 18px" }}>
@@ -966,7 +964,9 @@ export default function App() {
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
         * { box-sizing: border-box; }
+        html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; background: ${T.bg}; }
         html { scroll-behavior: smooth; }
+        body { overflow-x: hidden; }
         .display { font-family: 'Space Grotesk', sans-serif; }
         .mono { font-family: 'JetBrains Mono', monospace; }
         a { text-decoration: none; }
@@ -991,6 +991,9 @@ export default function App() {
         @keyframes scan { 0% { top: -120px; } 100% { top: 100%; } }
 
         .hero-visual { position: relative; aspect-ratio: 1/1; max-width: 400px; margin: 0 auto; }
+        .hero-grid { grid-template-columns: 1.15fr 0.85fr; }
+        .about-grid { grid-template-columns: 1fr 1.15fr; }
+        .contact-grid { grid-template-columns: 0.9fr 1.1fr; }
         .trace { stroke-dasharray: 6 6; animation: dash 3.5s linear infinite; opacity: 0.6; }
         @keyframes dash { to { stroke-dashoffset: -100; } }
         .node-pulse { animation: nodepulse 2.4s ease-in-out infinite; transform-origin: center; }
@@ -1075,6 +1078,8 @@ export default function App() {
         }
         .project-card:hover { border-color: ${T.borderBright}; }
         .project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; align-items: start; }
+        .project-grid-reversed .project-media-col { order: 2; }
+        .project-grid-reversed .project-info-col { order: 1; }
         .project-icon { width: 30px; height: 30px; border-radius: 8px; background: ${T.cyanDim}; border: 1px solid ${T.borderBright}; display: flex; align-items: center; justify-content: center; }
         .status-pill { font-size: 11px; color: ${T.violet}; border: 1px solid rgba(167,139,250,0.35); padding: 3px 10px; border-radius: 20px; }
         .repo-soon { display: inline-block; font-size: 12px; color: ${T.mutedDim}; border: 1px dashed ${T.border}; padding: 10px 16px; border-radius: 9px; }
@@ -1115,17 +1120,15 @@ export default function App() {
         @media (max-width: 880px) {
           .hide-mobile { display: none !important; }
           .hide-desktop { display: inline-flex; }
-          .about-grid, .project-grid { grid-template-columns: 1fr !important; }
-          .skills-grid { grid-template-columns: 1fr !important; }
-          .achieve-grid { grid-template-columns: 1fr !important; }
-        }
-        @media (max-width: 880px) {
-          section > div[style*="grid-template-columns: 1fr 1.15fr"],
-          section > div[style*="grid-template-columns: 1.15fr 0.85fr"],
-          section > div[style*="grid-template-columns: 0.9fr 1.1fr"] {
+          .hero-grid, .about-grid, .contact-grid, .project-grid {
             grid-template-columns: 1fr !important;
           }
-          .project-grid[style] { direction: ltr !important; }
+          .hero-grid { gap: 40px !important; }
+          .hero-copy { text-align: left; }
+          .hero-visual { max-width: 280px !important; margin-top: 8px; order: -1; }
+          .project-grid-reversed .project-media-col,
+          .project-grid-reversed .project-info-col { order: initial; }
+          .skills-grid, .achieve-grid { grid-template-columns: 1fr !important; }
         }
 
         @media (prefers-reduced-motion: reduce) {
