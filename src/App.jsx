@@ -484,8 +484,7 @@ function Hero({ onNavigate }) {
             </a>
           </div>
         </div>
-        <br></br>
-        <br></br>
+      
         <div className="hero-visual" aria-hidden="false">
           <svg viewBox="0 0 400 400" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
             <g opacity="0.55">
