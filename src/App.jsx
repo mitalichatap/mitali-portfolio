@@ -439,7 +439,7 @@ function Hero({ onNavigate }) {
     { text: "IoT", top: "72%", left: "2%", delay: "0.6s" },
     { text: "GPS", top: "20%", left: "84%", delay: "1.1s" },
     { text: "Java", top: "78%", left: "80%", delay: "1.7s" },
-    { text: "Robotics", top: "48%", left: "90%", delay: "2.2s" },
+    //{ text: "Robotics", top: "48%", left: "90%", delay: "2.2s" },
   ];
 
   return (
